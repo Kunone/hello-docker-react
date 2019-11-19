@@ -1,0 +1,22 @@
+version: '3'
+
+#docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app [image-id]
+services:
+  web:
+    build: # assume there is Dockfile inside
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+
+  tests:
+    build: # assume there is Dockfile inside
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["yarn", "run", "test"]
